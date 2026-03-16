@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Link, Badge } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
