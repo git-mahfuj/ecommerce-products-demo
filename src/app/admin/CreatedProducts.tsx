@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/card";
 import Image from "next/image";
 import React from "react";
+import EditProductsForm from "./edit-product/EditProductsForm";
+import { DeleteProductsForm } from "./delete-product/DeleteProducts";
 
 const CreatedProducts = () => {
   return (
@@ -29,9 +31,9 @@ const CreatedProducts = () => {
             <CardDescription>Description</CardDescription>
           </CardHeader>
           <CardFooter className="flex flex-col gap-2 pt-3 justify-center items-center pb-4">
-            <div className="flex items-center gap-2 ">
-              <Button className="">Edit</Button>
-              <Button className="">Delete</Button>
+            <div className="flex items-center gap-4">
+              <EditProductsForm />
+              <DeleteProductsForm />
             </div>
           </CardFooter>
         </Card>
