@@ -9,7 +9,7 @@ export interface ProductsData {
   price: number;
   discountedPrice?: number;
 }
-const ProductsCollection = ({ products }: { products: ProductsData[] }) => {
+const ProductsCollection = () => {
 const mockData: ProductsData[] = [
     {
       id: 1,
