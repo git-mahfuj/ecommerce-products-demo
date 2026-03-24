@@ -1,23 +1,29 @@
 import mongoose from "mongoose";
 
-const productsScema = mongoose.Schema.create({
-  name : {
-    type: String,
-    required : true
+const productsScema = mongoose.Schema.create(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    slug: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    price: {
+      type: Number,
+    },
+    discountedPrice: {
+      type: Number,
+    },
   },
-  slug : {
-    type : String,
-    default : name
+  {
+    timestamps: true,
   },
-  price : {
-    type : Number,
-  },
-  discountedPrice : {
-    type : Number
-  }
-} , {
-    timestamps : true
-})
+);
+const Product =
+  mongoose.models.Product || mongoose.model("Product", productsScema);
 
-
-export const Products = mongoose.models.Products || mongoose.model("Products" , productsScema)
+export default Product;
