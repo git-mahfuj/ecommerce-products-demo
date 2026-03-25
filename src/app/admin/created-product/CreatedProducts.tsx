@@ -1,28 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
-import React from "react";
-import CollectionProducts from "@/components/CollectionProducts"
-import { useState , useEffect } from "react";
-import axios from "axios";
-import {toast} from "sonner"
+"use client";
 
-export interface ProductsData {
-  id: number;
-  slug: string;
-  name: string;
-  description: string;
-  price: number;
-  discountedPrice?: number;
-}
-const ProductsCollection = () => {
-  const [collectionProducts, setCollectionProducts] = useState([]);
+import React, { useEffect, useState } from "react";
+
+import { toast } from "sonner";
+import axios from "axios";
+import Product from "@/schema/products.schema";
+import ProductCard from "./ProductCard";
+
+const CreatedProducts = () => {
+  const [createdProducts, setCreatedProducts] = useState([]);
   const [loading, setloading] = useState(true);
   useEffect(() => {
     const grabedProduct = async () => {
       setloading(true);
       try {
         const res = await axios.get("/api/products/get-products");
-        setCollectionProducts(res.data.products);
+        setCreatedProducts(res.data.products);
+        if (res.data.products) {
+          toast.success("Products Fetched");
+        }
       } catch (error: any) {
         console.log(error.message);
         toast.error("Server Error while Fetching Data");
@@ -32,17 +29,18 @@ const ProductsCollection = () => {
     };
     grabedProduct();
   }, []);
-  console.log(collectionProducts);
+  console.log(createdProducts);
   return (
-    <div className="flex flex-col justify-center items-center gap-6">
-      <h1 className="font-medium text-3xl">List of All Products</h1>
-      {collectionProducts ? (
+    <div className="flex flex-col translate-y-16 items-center justify-between font-sans dark:bg-black">
+      <h1 className="font-medium text-2xl">All Products</h1>
+      <div className="mt-4 ">
+        {createdProducts ? (
           <div>
-            {!loading && collectionProducts.length > 0 ? (
+            {!loading && createdProducts.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-4 justify-center items-center gap-6">
-                {collectionProducts.map((p) => (
+                {createdProducts.map((p) => (
                   <div key={p._id}>
-                    <CollectionProducts products={p} />
+                    <ProductCard products={p} />
                   </div>
                 ))}
               </div>
@@ -53,8 +51,9 @@ const ProductsCollection = () => {
         ) : (
           <div>No Products Found</div>
         )}
+      </div>
     </div>
   );
 };
 
-export default ProductsCollection;
+export default CreatedProducts;

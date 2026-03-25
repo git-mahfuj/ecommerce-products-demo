@@ -10,37 +10,38 @@ export async function PUT(
   { params }: { params: { id: string } },
 ) {
   try {
-     const {id} = await params
+    const { id } = await params;
     console.log("params id:", id);
 
     const reqBody = await req.json();
 
-    const {
-      newname: name,
-      newdescription: description,
-      newprice: price,
-      newdiscountedPrice: discountedPrice,
-    } = reqBody;
+    const { name, description, price, discountedPrice } = reqBody;
 
-    const product = await Product.findById(id);
-    console.log(product);
-    const updatedProduct = await Product.findByIdAndUpdate(
-      id,
-      { name, description, price, discountedPrice },
-    );
+    const updatedProduct = await Product.findByIdAndUpdate(id, {
+      name,
+      slug: name
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]+/g, ""),
+      description,
+      price,
+      discountedPrice,
+    });
 
     if (!updatedProduct) {
-      console.log("Product not found")
+      console.log("Product not found");
       return NextResponse.json(
         { message: "Product not found", success: false },
         { status: 404 },
       );
     }
-    console.log(updatedProduct)
+    console.log(updatedProduct);
     return NextResponse.json(
       {
         message: "Product Updated Successfully",
         success: true,
+        product: updatedProduct,
       },
       {
         status: 201,

@@ -1,4 +1,4 @@
-import Products from "@/components/Products";
+import Products from "@/components/CollectionProducts";
 import ProductsCollection from "@/components/Products.Collection";
 export default function Home() {
   return (

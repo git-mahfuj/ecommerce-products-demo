@@ -24,7 +24,11 @@ export async function POST(req: NextRequest) {
 
     const createdProduct = await new Product({
       name,
-      slug: name.toLowerCase(),
+      slug: name
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]+/g, ""),
       price,
       discountedPrice,
     });
