@@ -1,3 +1,4 @@
+import { ProductsType } from "@/lib/types";
 import mongoose from "mongoose";
 
 const productsScema = mongoose.Schema.create(
